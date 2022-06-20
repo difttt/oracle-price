@@ -258,7 +258,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let eth = web3.eth();
     let contract = Contract::from_json(
         eth,
-        hex!("82a7B95a9Dec5E572cAb584F520dDCf1B52bbaF3").into(),
+        hex!("297d8F72CFBD5e0908f68fa122A792e6EdeA0D2B").into(),
         include_bytes!("../abi.json"),
     )?;
     let reciept = contract
