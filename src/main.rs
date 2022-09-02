@@ -195,7 +195,7 @@ fn timestamp() -> u128 {
 async fn get_kucoin_price() -> Result<u64, Box<dyn std::error::Error>> {
     log::info!("Using kucoin price");
     let resp =
-        reqwest::get("https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-USDT")
+        reqwest::get("https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=DPR-USDT")
             .await?
             .text()
             .await?;
@@ -206,7 +206,7 @@ async fn get_kucoin_price() -> Result<u64, Box<dyn std::error::Error>> {
 async fn get_crypto_price() -> Result<u64, Box<dyn std::error::Error>> {
     log::info!("Using coinwatch price");
     let now = timestamp();
-    let resp = reqwest::get(format!("https://http-api.livecoinwatch.com/coins/history/range?coin=BTC&start={}&end={}&currency=USD",now-86400000,now))
+    let resp = reqwest::get(format!("https://http-api.livecoinwatch.com/coins/history/range?coin=DPR&start={}&end={}&currency=USD",now-86400000,now))
         .await?
         .text()
         .await?;
@@ -247,7 +247,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let now = timestamp();
     let p = match now % 2 {
         0 => get_crypto_price().await?,
-        1 => get_kucoin_price().await?,
+        //1 => get_kucoin_price().await?,
         _ => get_kucoin_price().await?,
     };
     log::info!("Got price: {}", p);
@@ -258,7 +258,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let eth = web3.eth();
     let contract = Contract::from_json(
         eth,
-        hex!("297d8F72CFBD5e0908f68fa122A792e6EdeA0D2B").into(),
+        hex!("0x862AF0CF4397C06B4B76288c97aBefdF3eD5F121").into(),
         include_bytes!("../abi.json"),
     )?;
     let reciept = contract
